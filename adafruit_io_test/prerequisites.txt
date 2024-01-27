@@ -1,0 +1,5 @@
+https://github.com/adafruit/Adafruit_IO_Python
+
+pip3 install adafruit-io
+pip3 install setuptools
+pip3 install wheel
