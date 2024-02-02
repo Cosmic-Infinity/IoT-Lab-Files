@@ -5,6 +5,9 @@
 # Import standard python modules.
 import sys
 
+import keyboard
+import time
+
 # Import Adafruit IO MQTT client.
 from Adafruit_IO import MQTTClient
 
@@ -19,7 +22,6 @@ ADAFRUIT_IO_USERNAME = 'usernamehere'
 
 # Set to the ID of the feed to subscribe to for updates.
 FEED_ID = 'Test'
-from threading import Timer
 
 
 
@@ -48,15 +50,14 @@ def message(client, feed_id, payload):
     # the new value.
     print('Feed {0} received new value: {1}'.format(feed_id, payload))
     timeout = 1
-    
-    t = Timer(timeout, print, )
-    t.start()
-    prompt = "You have %d seconds to choose the correct answer...\n" % timeout
-    answer = input(prompt)
-    t.cancel()   # Get the input
-    if answer == "q":
-        disconnected(client)
-         
+    keyboard.on_press_key('f', here)
+
+
+
+def here(event = None):
+    client.disconnect
+    disconnected(client)
+    sys.exit(1)
 
 
 # Create an MQTT client instance.
@@ -68,6 +69,7 @@ client.on_disconnect = disconnected
 client.on_message    = message
 client.on_subscribe  = subscribe
 
+
 # Connect to the Adafruit IO server.
 client.connect()
 
@@ -75,3 +77,4 @@ client.connect()
 # received.  Note there are other options for running the event loop like doing
 # so in a background thread--see the mqtt_client.py example to learn more.
 client.loop_blocking()
+
