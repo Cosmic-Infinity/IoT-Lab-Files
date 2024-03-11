@@ -1,4 +1,5 @@
 #include <SoftwareSerial.h>
+#include <String.h>
 
 #define trig 13
 #define echo 3
@@ -24,9 +25,12 @@ void setup() {
 
 void loop() {
   digitalWrite(trig, HIGH);
-  delay(500);
+  delay(3000);
   digitalWrite(trig, LOW);
   long pulse = pulseIn(echo, HIGH);
+  Serial.print("Puse : ");
+  Serial.print(pulse);
+  Serial.print("\n");
 
   float distance = pulse/58.31;
   if(distance>2150){
@@ -34,8 +38,9 @@ void loop() {
     mySerial.write("OOR");
   }
   else{
+    Serial.print("Distence : ");
     Serial.print(distance);
-    mySerial.write(distance);
-    Serial.println(" cm");
+    mySerial.write(pulse);
+    Serial.println(" cm\n");
   }
 }
